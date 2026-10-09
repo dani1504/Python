@@ -1,4 +1,7 @@
-lista = ["22", "53", "80", "443", "8080"]
+lista = [22, 53, 80, 443, 8080]
+
+for ip in lista:
+    print("-", ip)
 
 print(lista)
 print(lista[0])
