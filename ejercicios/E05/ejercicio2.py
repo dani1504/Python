@@ -7,3 +7,8 @@ usuario = {
 print(usuario["nombre"])
 print(usuario["edad"])
 print(usuario["activo"])
+
+# if servidor["activo"]:
+#     print("Esta activo")
+# else: 
+#     print("No está activo")
