@@ -1,5 +1,5 @@
 SERVIDORES = [
-    {
+     {
         "id": 101, "nombre": "web-01", "ip": "192.0.2.10", "rol": "web",
         "estado": "encendido", "cpu": 42, "ram": 55,
         "servicios": {"ssh": "activo", "nginx": "activo"},
