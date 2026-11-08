@@ -1,25 +1,5 @@
 from servidores import SERVIDORES, LISTAUNO, LISTAVACIA # Esto lo que hace es cojer las variables definidas en otro archivo y definirlas en este archivo.
 
-# print(SERVIDORES)
-
-
-# def mostrar_inventario(servidores):
-#     """Muestra la información básica de los servidores recibidos."""
-
-# def filtrar_por_estado(servidores, estado):
-#     """Devuelve una lista con los servidores del estado indicado."""
-#     lista = []
-
-#     for x in servidores:
-#         if x[estado] == estado:
-#             lista.append(servidor)
-
-#     return lista
-
-
-# servidores_encendidos = filtrar_por_estado(SERVIDORES, "encendido")
-# mostrar_inventario(servidores_encendidos)
-
 # APARTADO01:
 
 def mostrar_inventario(servidores):
@@ -33,7 +13,148 @@ def mostrar_inventario(servidores):
             ram_texto = f"{servidor['ram']}%"
             print(f"{servidor['id']:<5}{servidor['nombre']:<12}{servidor['rol']:<16}{servidor['estado']:<12}{cpu_texto:<5}{ram_texto}")
     else:
-        print("La lista esta vacia")
+        print("La lista esta  vacia")
         
 
-mostrar_inventario(SERVIDORES)
+#mostrar_inventario(SERVIDORES)
+
+# APARTADO02:
+
+def buscar_por_id(servidores, identificador):
+    """Devuelve el diccionario correspondiente o None si no existe."""  
+    for servidor in servidores:
+        if servidor['id'] == identificador:
+            return servidor
+    return None
+    
+resultado = buscar_por_id(SERVIDORES, 101)
+
+"""if resultado:
+    mostrar_inventario([resultado])
+else:
+    print("No se encontro ningun servidor con ese ID")"""
+
+# APARTADO03
+
+def filtrar_por_estado(servidores, estado):
+    """Devuelve una lista con los servidores del estado indicado."""
+    lista_estado = []
+    
+    for servidor in servidores:
+        if servidor['estado'] == estado:
+            lista_estado.append(servidor)
+    return lista_estado
+
+lista_encendidos = filtrar_por_estado(SERVIDORES, "encendido")
+"""mostrar_inventario(lista_encendidos)"""
+
+lista_apagados = filtrar_por_estado(SERVIDORES, "apagado")
+"""mostrar_inventario(lista_apagados)"""
+
+
+def filtrar_por_rol(servidores, rol):
+    """Devuelve una lista con los servidores del rol indicado."""
+    lista_rol = []
+    for servidor in servidores:
+        if servidor['rol'] == rol:
+            lista_rol.append(servidor)
+    return lista_rol
+
+lista_web = filtrar_por_rol(SERVIDORES, "web")
+"""mostrar_inventario(lista_web)"""
+
+# APARTADO04
+
+def calcular_resumen(servidores):
+    """Devuelve un diccionario con las estadísticas globales."""
+    total = len(servidores)
+    encendidos = len(lista_encendidos)
+    apagados = len(lista_apagados)
+    
+    if total == 0:
+        disponibilidad = 0.0
+    else:
+        disponibilidad = (encendidos / total) * 100
+
+    resumen = {
+        "total": total,
+        "encendidos": encendidos,
+        "apagados": apagados,
+        "disponibilidad": disponibilidad
+    }
+    return resumen
+
+def mostrar_resumen(servidores):
+    """Presenta las estadísticas de forma legible."""
+    resumen = calcular_resumen(servidores)
+
+    print(f"Total: {resumen['total']}") 
+    print(f"Encendidos: {resumen['encendidos']}") 
+    print(f"Apagados: {resumen['apagados']}") 
+    print(f"Disponibilidad: {resumen['disponibilidad']:.2f}%")
+
+"""mostrar_resumen(SERVIDORES)"""
+"""mostrar_resumen([])"""
+
+# APARTADO05 
+
+def calcular_resumen(servidores):
+    """Devuelve un diccionario con las estadísticas globales."""
+    total = len(servidores)
+    encendidos = len(lista_encendidos)
+    apagados = len(lista_apagados)
+    if total == 0:
+        disponibilidad = 0.0
+    else:
+        disponibilidad = (encendidos / total) * 100
+
+    suma_cpu= 0
+    suma_ram= 0
+    contador= 0
+    for servidor in lista_encendidos:
+        suma_cpu += servidor['cpu']
+        contador += 1
+        cpu_media = suma_cpu/2
+
+        suma_ram += servidor['cpu']
+        contador += 1
+        ram_media = suma_ram/2
+
+    resumen = {
+        "total": total,
+        "encendidos": encendidos,
+        "apagados": apagados,
+        "disponibilidad": disponibilidad,
+        "cpu_media": cpu_media,
+        "ram_media": ram_media
+    }
+    return resumen
+
+def mostrar_resumen(servidores):
+    """Presenta las estadísticas de forma legible."""
+    resumen = calcular_resumen(servidores)
+
+    print(f"Total: {resumen['total']}") 
+    print(f"Encendidos: {resumen['encendidos']}") 
+    print(f"Apagados: {resumen['apagados']}") 
+    print(f"Disponibilidad: {resumen['disponibilidad']:.2f}%")
+    print(f"CPU media: {resumen['cpu_media']:.2f}%")
+    print(f"RAM media: {resumen['ram_media']:.2f}%")
+
+mostrar_resumen(SERVIDORES)
+
+#APARTADO06 
+
+def mostrar_servicios(servidor):
+    """Muestra los servicios y su estado en un servidor."""
+
+
+
+def mostrar_servicios_empresa(servidores):
+    """Muestra los servicios y su estado de todos los servidores."""
+
+
+
+def contar_servicios_inactivos(servidores):
+    """Cuenta servicios inactivos en servidores encendidos. y lo devuelve comoo resultado"""
+
