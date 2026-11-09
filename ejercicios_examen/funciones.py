@@ -1,4 +1,4 @@
-from servidores import SERVIDORES, LISTAUNO, LISTAVACIA # Esto lo que hace es cojer las variables definidas en otro archivo y definirlas en este archivo.
+# from servidores import SERVIDORES, LISTAUNO, LISTAVACIA # Esto lo que hace es cojer las variables definidas en otro archivo y definirlas en este archivo.
 
 # APARTADO01:
 
@@ -14,10 +14,8 @@ def mostrar_inventario(servidores):
             print(f"{servidor['id']:<5}{servidor['nombre']:<12}{servidor['rol']:<16}{servidor['estado']:<12}{cpu_texto:<5}{ram_texto}")
     else:
         print("La lista esta  vacia")
-        
-
+   
 #mostrar_inventario(SERVIDORES)
-
 # APARTADO02:
 
 def buscar_por_id(servidores, identificador):
@@ -26,8 +24,8 @@ def buscar_por_id(servidores, identificador):
         if servidor['id'] == identificador:
             return servidor
     return None
-    
-resultado = buscar_por_id(SERVIDORES, 101)
+
+"""resultado = buscar_por_id(SERVIDORES, 101)"""
 
 """if resultado:
     mostrar_inventario([resultado])
@@ -39,17 +37,13 @@ else:
 def filtrar_por_estado(servidores, estado):
     """Devuelve una lista con los servidores del estado indicado."""
     lista_estado = []
-    
     for servidor in servidores:
         if servidor['estado'] == estado:
             lista_estado.append(servidor)
     return lista_estado
 
-lista_encendidos = filtrar_por_estado(SERVIDORES, "encendido")
-"""mostrar_inventario(lista_encendidos)"""
-
-lista_apagados = filtrar_por_estado(SERVIDORES, "apagado")
-"""mostrar_inventario(lista_apagados)"""
+    # OTRA FORMA DE HACERLO::(mas pro mas nota)
+    # return[x for x in servidores if x['estado'] == estado]
 
 
 def filtrar_por_rol(servidores, rol):
@@ -60,38 +54,37 @@ def filtrar_por_rol(servidores, rol):
             lista_rol.append(servidor)
     return lista_rol
 
-lista_web = filtrar_por_rol(SERVIDORES, "web")
-"""mostrar_inventario(lista_web)"""
-
 # APARTADO04
 
-def calcular_resumen(servidores):
-    """Devuelve un diccionario con las estadísticas globales."""
-    total = len(servidores)
-    encendidos = len(lista_encendidos)
-    apagados = len(lista_apagados)
+# def calcular_resumen(servidores):
+#     """Devuelve un diccionario con las estadísticas globales."""
+#     lista_encendidos = filtrar_por_estado(servidores, "encendido")
     
-    if total == 0:
-        disponibilidad = 0.0
-    else:
-        disponibilidad = (encendidos / total) * 100
+#     total = len(servidores)
+#     encendidos = len(lista_encendidos)
+#     apagados = total - encendidos
+    
+#     if total == 0:
+#         disponibilidad = 0.0
+#     else:
+#         disponibilidad = (encendidos / total) * 100
 
-    resumen = {
-        "total": total,
-        "encendidos": encendidos,
-        "apagados": apagados,
-        "disponibilidad": disponibilidad
-    }
-    return resumen
+#     resumen = {
+#         "total": total,
+#         "encendidos": encendidos,
+#         "apagados": apagados,
+#         "disponibilidad": disponibilidad
+#     }
+#     return resumen
 
-def mostrar_resumen(servidores):
-    """Presenta las estadísticas de forma legible."""
-    resumen = calcular_resumen(servidores)
+# def mostrar_resumen(servidores):
+#     """Presenta las estadísticas de forma legible."""
+#     resumen = calcular_resumen(servidores)
 
-    print(f"Total: {resumen['total']}") 
-    print(f"Encendidos: {resumen['encendidos']}") 
-    print(f"Apagados: {resumen['apagados']}") 
-    print(f"Disponibilidad: {resumen['disponibilidad']:.2f}%")
+#     print(f"Total: {resumen['total']}") 
+#     print(f"Encendidos: {resumen['encendidos']}") 
+#     print(f"Apagados: {resumen['apagados']}") 
+#     print(f"Disponibilidad: {resumen['disponibilidad']:.2f}%")
 
 """mostrar_resumen(SERVIDORES)"""
 """mostrar_resumen([])"""
@@ -100,26 +93,27 @@ def mostrar_resumen(servidores):
 
 def calcular_resumen(servidores):
     """Devuelve un diccionario con las estadísticas globales."""
+    lista_encendidos = filtrar_por_estado(servidores, "encendido")
     total = len(servidores)
     encendidos = len(lista_encendidos)
-    apagados = len(lista_apagados)
+    apagados = total - encendidos
     if total == 0:
         disponibilidad = 0.0
     else:
         disponibilidad = (encendidos / total) * 100
 
     # Sin hacer todavia porque no lo entiendo
-    suma_cpu= 0
-    suma_ram= 0
-    contador= 0
-    for servidor in lista_encendidos:
-        suma_cpu += servidor['cpu']
-        contador += 1
-        cpu_media = suma_cpu/2
+    suma= 0
+    for x in lista_encendidos:
+        suma = suma + x["cpu"]
 
-        suma_ram += servidor['cpu']
-        contador += 1
-        ram_media = suma_ram/2
+    cpu_media = suma / encendidos
+
+    suma_ram = 0
+    for x in lista_encendidos:
+        suma_ram += x["ram"]
+
+    ram_media = suma_ram / encendidos
 
     resumen = {
         "total": total,
@@ -142,24 +136,38 @@ def mostrar_resumen(servidores):
     print(f"CPU media: {resumen['cpu_media']:.2f}%")
     print(f"RAM media: {resumen['ram_media']:.2f}%")
 
-"""mostrar_resumen(SERVIDORES)"""
+# mostrar_resumen(SERVIDORES)
 
 #APARTADO06 
 
 def mostrar_servicios(servidor):
     """Muestra los servicios y su estado en un servidor."""
-    
+    print("Servidor:", servidor["nombre"])
+    for x in servidor["servicios"]:
+        print(x,":", servidor["servicios"][x])
 
-
-def mostrar_servicios_empresa(servidores):
+def mostrar_servicios_empresa(s):
     """Muestra los servicios y su estado de todos los servidores."""
-    for servidor in servidores:
-        for clave, valor in servidor['servicios'].items():
-            print(f"- Servicio: {clave:<10} ==> Estado: {valor}")
-
+    for x in s:
+        print("-"*20)
+        mostrar_servicios(x)
+    print("-"*20)
 
 def contar_servicios_inactivos(servidores):
     """Cuenta servicios inactivos en servidores encendidos. y lo devuelve comoo resultado"""
+    encendidos = filtrar_por_estado(servidores, "encendido")
+    
+    contador= 0
+    for servidor in encendidos:
+        for x in servidor["servicios"]:
+            if servidor["servicios"][x] == "inactivo":
+                contador = contador + 1
+    return contador
+
 
 #APARTADO07
 
+
+
+if __name__ == '__main__':
+    print("Solo se imprime si se invoca el modulo") # Esto se pone para hacer tests de los codigos.
