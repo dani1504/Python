@@ -108,6 +108,7 @@ def calcular_resumen(servidores):
     else:
         disponibilidad = (encendidos / total) * 100
 
+    # Sin hacer todavia porque no lo entiendo
     suma_cpu= 0
     suma_ram= 0
     contador= 0
@@ -141,20 +142,24 @@ def mostrar_resumen(servidores):
     print(f"CPU media: {resumen['cpu_media']:.2f}%")
     print(f"RAM media: {resumen['ram_media']:.2f}%")
 
-mostrar_resumen(SERVIDORES)
+"""mostrar_resumen(SERVIDORES)"""
 
 #APARTADO06 
 
 def mostrar_servicios(servidor):
     """Muestra los servicios y su estado en un servidor."""
-
+    
 
 
 def mostrar_servicios_empresa(servidores):
     """Muestra los servicios y su estado de todos los servidores."""
-
+    for servidor in servidores:
+        for clave, valor in servidor['servicios'].items():
+            print(f"- Servicio: {clave:<10} ==> Estado: {valor}")
 
 
 def contar_servicios_inactivos(servidores):
     """Cuenta servicios inactivos en servidores encendidos. y lo devuelve comoo resultado"""
+
+#APARTADO07
 
