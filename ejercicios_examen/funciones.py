@@ -22,7 +22,7 @@ def buscar_por_id(servidores, identificador):
     """Devuelve el diccionario correspondiente o None si no existe."""  
     for servidor in servidores:
         if servidor['id'] == identificador:
-            return servidor
+            return servidor # Continue: pasa a la siguiente iteración
     return None
 
 """resultado = buscar_por_id(SERVIDORES, 101)"""
@@ -146,12 +146,12 @@ def mostrar_servicios(servidor):
     for x in servidor["servicios"]:
         print(x,":", servidor["servicios"][x])
 
-def mostrar_servicios_empresa(s):
-    """Muestra los servicios y su estado de todos los servidores."""
-    for x in s:
-        print("-"*20)
-        mostrar_servicios(x)
-    print("-"*20)
+# def mostrar_servicios_empresa(s):servidor = buscar_por_id(servidores, identificador)
+#     """Muestra los servicios y su estado de todos los servidores."""
+#     for x in s:
+#         print("-"*20)
+#         mostrar_servicios(x)
+#     print("-"*20)
 
 def contar_servicios_inactivos(servidores):
     """Cuenta servicios inactivos en servidores encendidos. y lo devuelve comoo resultado"""
@@ -166,6 +166,37 @@ def contar_servicios_inactivos(servidores):
 
 
 #APARTADO07
+
+def cambiar_estado(servidores, identificador, nuevo_estado):
+    """Simula un cambio entre 'encendido' y 'apagado'."""
+    # Primero lo que hay que hacer es comprobar si el nuevo_estado no existe.
+    servidor = buscar_por_id(servidores, identificador)
+
+    if servidor == None:
+        raise ValueError("No existe el servidor")
+
+    if nuevo_estado == "encendido" or nuevo_estado == "apagado":
+        servidor["estado"] = nuevo_estado
+    else:
+        raise ValueError(f"Estado {nuevo_estado} no permitido") # GENERAR UNA EXCEPCION
+
+
+
+    servidor["estado"] = nuevo_estado
+
+
+
+    
+    
+        
+
+
+def cambiar_servicio(servidores, identificador, nombre_servicio, nuevo_estado):
+    """Simula un cambio entre 'activo' e 'inactivo'."""
+
+
+
+# APARTADO08
 
 
 
