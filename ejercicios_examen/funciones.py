@@ -9,8 +9,8 @@ def mostrar_inventario(servidores):
         print(f"{'ID':<5}{'NOMBRE':<12}{'ROL':<16}{'ESTADO':<12}{'CPU':<5}{'RAM'}")
         print("-"*70)
         for servidor in servidores:
-            cpu_texto = f"{servidor['cpu']}%"
-            ram_texto = f"{servidor['ram']}%"
+            cpu_texto = f"{servidor["cpu"]}%"
+            ram_texto = f"{servidor["ram"]}%"
             print(f"{servidor['id']:<5}{servidor['nombre']:<12}{servidor['rol']:<16}{servidor['estado']:<12}{cpu_texto:<5}{ram_texto}")
     else:
         print("La lista esta  vacia")
@@ -20,9 +20,9 @@ def mostrar_inventario(servidores):
 
 def buscar_por_id(servidores, identificador):
     """Devuelve el diccionario correspondiente o None si no existe."""  
-    for servidor in servidores:
-        if servidor['id'] == identificador:
-            return servidor # Continue: pasa a la siguiente iteración
+    for x in servidores:
+        if x["id"] == identificador:
+            return x # Continue: pasa a la siguiente iteración
     return None
 
 """resultado = buscar_por_id(SERVIDORES, 101)"""
@@ -56,38 +56,33 @@ def filtrar_por_rol(servidores, rol):
 
 # APARTADO04
 
-# def calcular_resumen(servidores):
-#     """Devuelve un diccionario con las estadísticas globales."""
-#     lista_encendidos = filtrar_por_estado(servidores, "encendido")
+def calcular_resumen(servidores):
+    """Devuelve un diccionario con las estadísticas globales."""
+    total = len(servidores)
+    encendidos = len(filtrar_por_estado(servidores, "encendido"))
+    apagados = total - encendidos
+    if total ==0:
+        disponibilidad = 0.0
+    else:
+        disponibilidad = (encendidos / total) * 100
+
+    diccionario = {
+        "total": total,
+        "encendidos": encendidos,
+        "apagados": apagados,
+        "disponibilidad": disponibilidad
+    }
+    return diccionario
     
-#     total = len(servidores)
-#     encendidos = len(lista_encendidos)
-#     apagados = total - encendidos
-    
-#     if total == 0:
-#         disponibilidad = 0.0
-#     else:
-#         disponibilidad = (encendidos / total) * 100
 
-#     resumen = {
-#         "total": total,
-#         "encendidos": encendidos,
-#         "apagados": apagados,
-#         "disponibilidad": disponibilidad
-#     }
-#     return resumen
+def mostrar_resumen(servidores):
+    """Presenta las estadísticas de forma legible."""
+    diccionario = calcular_resumen(servidores)
 
-# def mostrar_resumen(servidores):
-#     """Presenta las estadísticas de forma legible."""
-#     resumen = calcular_resumen(servidores)
-
-#     print(f"Total: {resumen['total']}") 
-#     print(f"Encendidos: {resumen['encendidos']}") 
-#     print(f"Apagados: {resumen['apagados']}") 
-#     print(f"Disponibilidad: {resumen['disponibilidad']:.2f}%")
-
-"""mostrar_resumen(SERVIDORES)"""
-"""mostrar_resumen([])"""
+    print(f"Total: {diccionario["total"]}")
+    print(f"Encendidos: {diccionario["encendidos"]}")
+    print(f"Apagados: {diccionario["apagados"]}")
+    print(f"Disponibilidad: {diccionario["disponibilidad"]}0%")
 
 # APARTADO05 
 
@@ -145,6 +140,7 @@ def mostrar_servicios(servidor):
     print("Servidor:", servidor["nombre"])
     for x in servidor["servicios"]:
         print(x,":", servidor["servicios"][x])
+    
 
 # def mostrar_servicios_empresa(s):servidor = buscar_por_id(servidores, identificador)
 #     """Muestra los servicios y su estado de todos los servidores."""
@@ -180,15 +176,7 @@ def cambiar_estado(servidores, identificador, nuevo_estado):
     else:
         raise ValueError(f"Estado {nuevo_estado} no permitido") # GENERAR UNA EXCEPCION
 
-
-
     servidor["estado"] = nuevo_estado
-
-
-
-    
-    
-        
 
 
 def cambiar_servicio(servidores, identificador, nombre_servicio, nuevo_estado):
@@ -198,7 +186,7 @@ def cambiar_servicio(servidores, identificador, nombre_servicio, nuevo_estado):
 
 # APARTADO08
 
-
+    
 
 if __name__ == '__main__':
     print("Solo se imprime si se invoca el modulo") # Esto se pone para hacer tests de los codigos.
