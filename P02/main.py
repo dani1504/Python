@@ -5,8 +5,11 @@ productos = f.obtener_productos()
 
 # f.mostrar_productos(productos)
 
-# titulo = f.buscar_por_titulo(productos, "powder canister")
+# titulo = f.buscar_por_titulo(productos, "powder        ")
 # f.mostrar_productos(titulo)
 
-filtro = f.filtrar_productos(productos, "fragrances", 49.99, 13)
-f.mostrar_productos(filtro)
+# filtro = f.filtrar_productos(productos, "fragrances", 49.99, 13)
+# f.mostrar_productos(filtro)
+
+ejercicio3 = f.filtrar_productos (productos, None, None, True)
+f.mostrar_productos(ejercicio3)
